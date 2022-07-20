@@ -1,10 +1,17 @@
-from alpine
+FROM alpine:3.16
 
-run apk add unzip wget
+ARG POCKETBASE_VERSION=0.2.8
 
-run wget https://github.com/pocketbase/pocketbase/releases/download/v0.3.1/pocketbase_0.3.1_linux_amd64.zip
-run unzip pocketbase_0.3.1_linux_amd64.zip
+RUN apk add --no-cache \
+    ca-certificates \
+    unzip \
+    wget \
+    zip \
+    zlib-dev
 
-run mv pocketbase /usr/local/bin/
+ADD https://github.com/pocketbase/pocketbase/releases/download/v${POCKETBASE_VERSION}/pocketbase_${POCKETBASE_VERSION}_linux_amd64.zip /tmp/pocketbase.zip
+RUN unzip /tmp/pocketbase.zip -d /usr/local/bin/
+RUN chmod +x /usr/local/bin/pocketbase
 
-cmd pocketbase serve
+# Start Pocketbase
+CMD [ "/usr/local/bin/pocketbase", "serve" ]

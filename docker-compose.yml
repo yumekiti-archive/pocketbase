@@ -1,0 +1,8 @@
+version: "3.9"
+
+services:
+  express:
+    build: ./
+    container_name: pocketbase
+    ports:
+      - "8090:8090"
