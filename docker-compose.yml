@@ -1,7 +1,7 @@
 version: "3.9"
 
 services:
-  express:
+  pocketbase:
     build: ./
     container_name: pocketbase
     ports:
